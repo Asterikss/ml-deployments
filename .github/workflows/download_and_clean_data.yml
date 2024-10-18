@@ -1,0 +1,44 @@
+name: Run Data Cleaning Script
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  cleaning-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Clone foreign repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: git clone https://github.com/PJATK-ASI-2024/Lab2---Obr-bka-danych.git
+
+      - name: Install foregin dependencies
+        run: pip install -r Lab2---Obr-bka-danych/requirements.txt
+
+      - name: Generate data
+        run: python Lab2---Obr-bka-danych/generator_danych.py
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download data from the google sheet and clean it
+        env:
+          SHEETS_CREDS: ${{ secrets.SHEETS_CREDS }}
+        run: |
+          echo "$SHEETS_CREDS" > creds.json
+          python main.py
+
+      - name: Display cleaning report
+        run: cat report.txt
