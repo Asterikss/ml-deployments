@@ -78,6 +78,8 @@ def main():
     report = f"Raport:\n"
     report += f"Liczba usuniętych wierszy: {n_removed_rows}\n"
     report += f"Liczba zmodyfikowanych wartości: {n_modified_rows}\n"
+    report += f"Początkowa liczba wierszy: {len(df_standardized) + n_removed_rows}\n"
+    report += f"Początkowa liczba po obróbce: {len(df_standardized)}\n"
 
     print(report)
 
