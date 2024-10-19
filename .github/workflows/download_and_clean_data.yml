@@ -30,7 +30,7 @@ jobs:
         run: pip install -r Lab2---Obr-bka-danych/requirements.txt
 
       - name: Generate data
-        run: python Lab2---Obr-bka-danych/generator_danych.py
+        run: python Lab2---Obr-bka-danych/generator_danych.py -s 25279
 
       - name: Install dependencies
         run: pip install -r requirements.txt
