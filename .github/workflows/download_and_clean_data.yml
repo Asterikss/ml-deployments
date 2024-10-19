@@ -19,10 +19,12 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Clone foreign repo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: git clone https://github.com/PJATK-ASI-2024/Lab2---Obr-bka-danych.git
+      - name: Checkout foreign repository
+        uses: actions/checkout@v3
+        with:
+          repository: PJATK-ASI-2024/Lab2---Obr-bka-danych
+          token: ${{ secrets.GH_TOKEN }}
+          path: Lab2---Obr-bka-danych
 
       - name: Install foregin dependencies
         run: pip install -r Lab2---Obr-bka-danych/requirements.txt
