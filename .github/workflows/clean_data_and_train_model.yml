@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  cleaning-script:
+  training-script:
     runs-on: ubuntu-latest
 
     steps:
