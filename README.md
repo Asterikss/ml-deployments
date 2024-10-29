@@ -1,37 +1,48 @@
-# Data Cleaning Script
+# College Distance Dataset Analysis and Model Training
 
-This GitHub Actions workflow automates the process of data cleaning using a script that retrieves data from a Google Sheet, cleans it, and generates a report. The script performs the following operations:
+This project includes data processing and predictive modeling workflows for the College Distance dataset, targeting the prediction of the `score` variable. The project is divided into two main parts: Data Analysis and Model Training.
 
-1. **Data Retrieval**: Fetches data from a Google Sheet.
-2. **Data Cleaning**: Removes rows with excessive missing data and fills missing values in key columns.
-3. **Data Standardization**: Standardizes numeric columns like age and average income.
-4. **Report Generation**: Produces a report detailing the data cleaning process.
+## Part 1: Data Analysis and Transformation
 
-### Workflow Steps
-1. **Checkout repository**: Pulls the main repository.
-2. **Set up Python**: Installs Python 3.x.
-3. **Checkout foreign repository**: Pulls a second repository with required dependencies.
-4. **Install foreign dependencies**: Installs dependencies from the external repository.
-5. **Generate Data**: Runs a script to generate data.
-6. **Install dependencies**: Installs dependencies for the main project.
-7. **Download and clean data**: Downloads the Google Sheet data and runs the cleaning script.
-8. **Display report**: Outputs the cleaning report.
+### Overview
+Exploratory Data Analysis (EDA) and data cleaning tasks for preparing the College Distance dataset.
 
-## Local Development
+### Key Steps
+1. **Data Exploration**: Initial data inspection with null checks, statistical summaries, and unique value counts.
+2. **Visualizations**:
+   - Bar plots for `education`, `tuition`, and `wage`.
+   - Histogram of `score`.
+3. **Statistical Analysis**:
+   - Calculated skewness and kurtosis for numeric columns.
+   - Correlation matrix to explore relationships.
+4. **Categorical Encoding**:
+   - Ordinal encoding for categorical columns; dictionary saved for mappings.
+5. **Save Processed Data**:
+   - Cleaned data: `CollegeDistanceCleaned.csv`.
+   - Encoder: `ordinal_encoder.pkl`.
 
-To run the script locally:
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Place your Google Sheets credentials in `creds.json`.
-3. Run the cleaning script:
-   ```bash
-   python main.py
-   ```
-4. View the report in `report.txt` after the script completes.
+## Part 2: Model Training and Evaluation
 
-## Secrets
+### Overview
+Regression models to predict `score` using Decision Tree, Random Forest, Linear Regression, and Gradient Boosting.
 
-- `GH_TOKEN`: GitHub token for accessing private repositories.
-- `SHEETS_CREDS`: Credentials for accessing Google Sheets.
+### Key Steps
+1. **Data Preparation**:
+   - Split data (80-20) for training and testing.
+2. **Model Training**:
+   - **Decision Tree**: Adjusted depths and criteria.
+   - **Random Forest**: Tuned tree count and depth.
+   - **Linear Regression**: Baseline linear model.
+   - **Gradient Boosting**: Tested various parameters; feature selection refined.
+3. **Evaluation Metrics**:
+   - Used MAE, MSE, R², and custom accuracy for evaluation.
+4. **Hyperparameter Tuning**:
+   - Optimized Gradient Boosting with `RandomizedSearchCV`.
+
+### Best Results
+- **Gradient Boosting**:
+  - MAE: 5.64, MSE: 48.19, R²: 0.36
+  - Accuracy within ±10%: 51.05%
+
+## Summary
+The Gradient Boosting model outperformed other models, achieving the highest accuracy and lowest error rates.
