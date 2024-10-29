@@ -23,10 +23,10 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Clean data
-        run: pyton clean.py
+        run: python clean.py
 
       - name: Train model
-        run: pyton train.py
+        run: python train.py
 
       - name: Display model results on the test set
         run: cat results.txt
