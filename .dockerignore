@@ -1,0 +1,11 @@
+.dev/
+.github/
+.ipynb_checkpoints/
+data/
+.git
+.gitignore
+DataCleaning.ipynb
+ModelCreation.ipynb
+ProjectDocumentation.pdf
+README.md
+__pycache__/
