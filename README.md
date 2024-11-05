@@ -75,3 +75,58 @@ To stop the container, press `CTRL + C` in the terminal where the container is r
 ```bash
 docker ps  # Find the container ID
 docker stop <container_id>
+```
+
+## Running Locally
+
+To run the FastAPI application on your local machine without Docker, follow these steps:
+
+### Prerequisites
+
+- **Python 3.12**: Ensure Python 3.12 is installed. [Download Python](https://www.python.org/downloads/)
+- **Virtual Environment (optional)**: It’s recommended to create a virtual environment to manage dependencies.
+
+### Installation Steps
+
+1. **Clone the Repository**
+
+First, clone this repository or download the source code to your local machine:
+
+```bash
+git clone https://github.com/asterikss/model-deployment.git
+cd model-deployment
+```
+
+2. **Install Dependencies**
+
+   Install the required Python packages listed in `requirements.txt`:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the Application**
+
+   Set PYTHONPATH:
+
+   ```bash
+   export PYTHONPATH="src/:$PYTHONPATH"
+   ```
+
+   Start the FastAPI server locally:
+
+   ```bash
+   uvicorn src.main:app --host 0.0.0.0 --port 8032
+   ```
+
+   This command starts the server on `http://0.0.0.0:8032`.
+
+4. **Access the API Documentation**
+
+   Once the server is running, you can access the FastAPI documentation at:
+
+   - **Swagger UI**: [http://localhost:8032/docs](http://localhost:8032/docs)
+
+5. **Testing the API**
+
+   Use the example `curl` command to test the `/predict` endpoint as described above.
