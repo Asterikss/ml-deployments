@@ -1,48 +1,77 @@
-# College Distance Dataset Analysis and Model Training
+# Model Deployment
 
-This project includes data processing and predictive modeling workflows for the College Distance dataset, targeting the prediction of the `score` variable. The project is divided into two main parts: Data Analysis and Model Training.
+Dockerized FastAPI application for model inference. This image allows you to easily deploy a machine learning model with an API endpoint for predictions.
 
-## Part 1: Data Analysis and Transformation
+## Getting Started
 
-### Overview
-Exploratory Data Analysis (EDA) and data cleaning tasks for preparing the College Distance dataset.
+Follow these instructions to pull and run the image from Docker Hub.
 
-### Key Steps
-1. **Data Exploration**: Initial data inspection with null checks, statistical summaries, and unique value counts.
-2. **Visualizations**:
-   - Bar plots for `education`, `tuition`, and `wage`.
-   - Histogram of `score`.
-3. **Statistical Analysis**:
-   - Calculated skewness and kurtosis for numeric columns.
-   - Correlation matrix to explore relationships.
-4. **Categorical Encoding**:
-   - Ordinal encoding for categorical columns; dictionary saved for mappings.
-5. **Save Processed Data**:
-   - Cleaned data: `CollegeDistanceCleaned.csv`.
-   - Encoder: `ordinal_encoder.pkl`.
+### Prerequisites
 
-## Part 2: Model Training and Evaluation
+- **Docker**: Ensure Docker is installed on your system. [Download Docker](https://docs.docker.com/get-docker/)
 
-### Overview
-Regression models to predict `score` using Decision Tree, Random Forest, Linear Regression, and Gradient Boosting.
+### Pull the Image
 
-### Key Steps
-1. **Data Preparation**:
-   - Split data (80-20) for training and testing.
-2. **Model Training**:
-   - **Decision Tree**: Adjusted depths and criteria.
-   - **Random Forest**: Tuned tree count and depth.
-   - **Linear Regression**: Baseline linear model.
-   - **Gradient Boosting**: Tested various parameters; feature selection refined.
-3. **Evaluation Metrics**:
-   - Used MAE, MSE, R², and custom accuracy for evaluation.
-4. **Hyperparameter Tuning**:
-   - Optimized Gradient Boosting with `RandomizedSearchCV`.
+To get the latest version of the image, use:
 
-### Best Results
-- **Gradient Boosting**:
-  - MAE: 5.64, MSE: 48.19, R²: 0.36
-  - Accuracy within ±10%: 51.05%
+```bash
+docker pull asterikss/model-deployment:latest
+```
 
-## Summary
-The Gradient Boosting model outperformed other models, achieving the highest accuracy and lowest error rates.
+### Run the Container
+
+To start the container, run the following command:
+
+```bash
+docker run -p 8032:8032 asterikss/model-deployment:latest
+```
+
+This command exposes the application on port `8032` on your local machine.
+
+### Using the API
+
+Once the container is running, you can access the FastAPI documentation at:
+
+- **Swagger UI**: [http://localhost:8032/docs](http://localhost:8032/docs)
+  
+  The Swagger UI provides an interactive API documentation, allowing you to easily test and see details of each endpoint.
+
+### Example Usage
+
+The API exposes a `/predict` endpoint for making predictions. Here’s an example of how to use it:
+
+1. **Request Format**: Ensure you have the correct input format. Refer to the `/docs` page for the expected data structure.
+
+2. **Sending a Request**: Use `curl` or any HTTP client to send a POST request.
+
+   Example with `curl`:
+
+   ```bash
+   curl -X POST http://localhost:8032/predict \
+   -H "Content-Type: application/json" \
+   -d '{
+   "gender": "male",
+   "ethnicity": "other",
+   "fcollege": true,
+   "mcollege": true,
+   "home": true,
+   "urban": true,
+   "unemp": 8.0,
+   "wage": 19.0,
+   "distance": 8.0,
+   "tuition": 20.0,
+   "education": 12,
+   "income": "low",
+   "region": "other"
+   }'
+   ```
+
+3. **Response**: You’ll receive a JSON response with the "score" prediction.
+
+## Stopping the Container
+
+To stop the container, press `CTRL + C` in the terminal where the container is running, or run the following command in another terminal:
+
+```bash
+docker ps  # Find the container ID
+docker stop <container_id>
